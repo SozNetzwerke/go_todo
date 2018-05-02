@@ -1,0 +1,32 @@
+<!--index.html-->
+{{ template "header.html" .}}
+
+<main class="container-fluid">
+    <h1>Home</h1><br>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th scope="col">Aufgabe</th>
+                <th scope="col">Deadline</th>
+                <th></th>
+            </tr>
+            {{range .payload }}
+                <tr>
+                    <td>
+                        <a href="/todo/edit/{{.ID}}"><h2>{{.Title}}</h2></a>
+                    </td>
+                    <td>
+                        <p>{{.DueDate}}</p>
+                    </td>
+                    <td class="text-right">
+                        <button class="btn btn-outline-danger">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAvUlEQVRYR+3XQQ5BMRCA4e+tETuu4AjW9hYO4QzO4AaOgbUDOIMbsLGxJxUv4UVImhKJ6a5NZubP32nTVvLHBAtUmGKVkyoF5449erfgA/o5iRLAOSewVEwA/ISBeju/3QvXA3B/CgLg5wzU29MEK7r+qgeKFnpy4b1twgAIA2EgDISBMBAG/s/ACa1SP543eVKtTvNVvMb4SwBLpM/tw7N8gC26H4Y4YohdEyDNE8QcI7QLgyTtG8zq4in/BdMpcR3FFzYVAAAAAElFTkSuQmCC" alt="delete">
+                        </button>
+                    </td>
+                </tr>
+            {{end}}
+        </table>
+    </div>
+</main>
+
+{{ template "footer.html" .}}
