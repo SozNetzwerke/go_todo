@@ -1,7 +1,7 @@
 {{ template "header.html" .}}
 <main class="container-fluid">
     <h1>TODO hinzufügen</h1><br>
-    <form class="form-group">
+    <form class="form-group" onreset="setProgress('0','#input_progress')">
         <div class="form-group">
             <label for="aufgabe">Aufgabe:</label>
             <textarea class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required> </textarea>

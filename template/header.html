@@ -14,8 +14,11 @@
 
     <script>
 
+        function toParse(id) {
+            $(id).val(parseFloat($(id).val()));
+        }
         function setProgress(value,id){
-            var x=value;
+            var x=parseFloat(value);
             if (x==""){
                 $(id).val(0);
                 x=0;
@@ -25,6 +28,7 @@
                 $(id).css("width",x.toString()+"%");
             }else{
                 $(id).css("width","0%");
+                $(id).val(0);
             }
         }
 
