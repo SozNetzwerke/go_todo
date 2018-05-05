@@ -1,21 +1,55 @@
 package main
 
-import "time"
+import (
+	_ "github.com/go-sql-driver/mysql"
+	"log"
+	"database/sql"
+)
 
 type todo struct {
-	ID      int       `json:"id"`
-	Title   string    `json:"title"`
-	Content string    `json:"content"`
-	DueDate string `json:"due"`
+	ID      int    `json:"id"`
+	Content string `json:"content"`
+	Datum   string `json:"datum"`
+	Fortschritt float64 `json:"fortschritt"`
 }
 
-var todoList = []todo{
-	{ID: 1, Title: "Putzen", Content: "Frühjahrsputz",
-		DueDate: time.Date(2018, 05, 20, 0, 0, 0, 0, time.UTC).Format("02-01-2006")},
-	{ID: 2, Title: "Soziale Netzwerke Hausaufgabe", Content: "Vorstellen einer todo-Webapp",
-		DueDate: time.Date(2018, 05, 14, 0, 0, 0, 0, time.UTC).Format("02-01-2006")},
-}
 
-func getAllTodos() []todo  {
+func getAllTodos() []todo {
+
+	var (
+		id int
+		content string
+		datum string
+		fortschritt float64
+		todoList []todo
+	)
+
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/sn")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+
+	rows, err := db.Query("select * from todos")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	var t todo
+	for rows.Next() {
+		err := rows.Scan(&id, &content,&datum,&fortschritt)
+		if err != nil {
+			log.Fatal(err)
+		}
+		t=todo{ID:id, Content:content, Datum:datum, Fortschritt:fortschritt}
+		todoList = append(todoList, t)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
 	return todoList
 }

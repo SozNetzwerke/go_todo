@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="de">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,11 +12,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <title>TODO-Tracker</title>
+    <script>
+
+        function setProgress(value,id){
+            var x=value;
+            if (x==""){
+                $(id).val(0);
+                x=0;
+            }
+            if(x>=0 && x<=100){
+                $(id).text(x.toString()+"%")
+                $(id).css("width",x.toString()+"%");
+            }else{
+                $(id).css("width","0%");
+            }
+        }
+
+    </script>
+    <title>{{.title}}</title>
 </head>
 
 <body>
-<header>
-    <!--Embed the navbar.html template at this location-->
-    {{ template "navbar.html" . }}
-</header>
+<!--Embed the menu.html template at this location-->
+{{ template "menu.html" . }}
