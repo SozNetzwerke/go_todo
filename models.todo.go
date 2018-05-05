@@ -4,6 +4,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"database/sql"
+	"errors"
 )
 
 type todo struct {
@@ -52,4 +53,14 @@ func getAllTodos() []todo {
 
 
 	return todoList
+}
+
+func getTodoById(id int) (*todo, error) {
+	todoList:=getAllTodos()
+	for _, a := range todoList {
+		if a.ID == id {
+			return &a, nil
+		}
+	}
+	return nil, errors.New("TODO not found")
 }
