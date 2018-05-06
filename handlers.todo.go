@@ -45,6 +45,7 @@ func getTodo(c *gin.Context) {
 
 			if todo, err := getTodoById(todoID); err == nil {
 				// Call the HTML method of the Context to render a template
+				log.Println(Datum)
 				c.HTML(
 					// Set the HTTP status to 200 (OK)
 					http.StatusOK,

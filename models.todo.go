@@ -5,6 +5,7 @@ import (
 	"log"
 	"database/sql"
 	"errors"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type todo struct {
@@ -25,14 +26,14 @@ func getAllTodos() []todo {
 		todoList []todo
 	)
 
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/sn")
+	db, err := sql.Open("sqlite3", "db/SN.db")
 	// if there is an error opening the connection, handle it
 	if err != nil {
 		log.Print(err.Error())
 	}
 	defer db.Close()
 
-	rows, err := db.Query("select * from todos")
+	rows, err := db.Query("select * from todo")
 	if err != nil {
 		log.Fatal(err)
 	}
