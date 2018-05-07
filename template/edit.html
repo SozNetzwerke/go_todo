@@ -1,10 +1,11 @@
 {{ template "header.html" .}}
+
 <main class="container-fluid">
     <h1>TODO hinzufügen</h1><br>
-    <form class="form-group" action="edit.html" method="post" onreset="setProgress('{{.Fortschritt}}','#input_progress')">
+    <form id="myForm" class="form-group" action="edit.html/update/{{.title}}" method="post" onreset="setProgress('{{.Fortschritt}}','#input_progress')" onsubmit=' return confirm("Sind Sie mit den Änderungen einverstanden?");'>
         <div class="form-group">
             <label for="aufgabe">Aufgabe:</label>
-            <textarea class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required>{{.Content}} </textarea>
+            <textarea id="content" class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required>{{.Content}}</textarea>
         </div>
         <div class="form-group">
             <label for="datum">Datum:</label>

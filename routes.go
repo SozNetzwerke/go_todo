@@ -9,15 +9,15 @@ import (
 func initializeRoutes(){
 
 	router.Use(static.Serve("/img", static.LocalFile("./img", true)))
-	router.StaticFile("/template/progress.js", "./template/progress.js")
 
-
-
+	router.POST("/index.html/delete/:todo_id", deleteTodo)
 	router.GET("/", showIndexPage)
 
 	router.GET("/index.html", showIndexPage)
 
 	router.GET("/edit.html", getTodo)
+
+	router.POST("/edit.html/update/:todo_id" ,updateTodo)
 
 	router.GET("createTODO.html", func(c *gin.Context) {
 		c.HTML(

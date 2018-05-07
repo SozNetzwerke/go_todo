@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"strconv"
+	"log"
 )
 
 func showIndexPage(c *gin.Context) {
@@ -29,7 +30,7 @@ func showIndexPage(c *gin.Context) {
 
 func getTodo(c *gin.Context) {
 
-	if c.Request.URL.Query().Get("id") == "" || c.Request.URL.Query().Get("id")=="0"{
+	if c.Query("id") == "" || c.Request.URL.Query().Get("id")=="0"{
 		c.HTML(
 			// Set the HTTP status to 200 (OK)
 			http.StatusOK,
@@ -41,11 +42,11 @@ func getTodo(c *gin.Context) {
 			},
 		)
 	}else {
-		if todoID, err := strconv.Atoi(c.Request.URL.Query().Get("id")); err == nil {
+		if todoID, err := strconv.Atoi(c.Query("id")); err == nil {
 
 			if todo, err := getTodoById(todoID); err == nil {
 				// Call the HTML method of the Context to render a template
-				log.Println(Datum)
+				log.Println(todo.Datum)
 				c.HTML(
 					// Set the HTTP status to 200 (OK)
 					http.StatusOK,
@@ -70,4 +71,16 @@ func getTodo(c *gin.Context) {
 			c.AbortWithStatus(http.StatusNotFound)
 		}
 		}
+}
+
+func updateTodo(c *gin.Context){
+	update(c.Param("todo_id"),c.PostForm("aufgabe_input"), c.PostForm("date_input"), c.PostForm("fortschritt_input"))
+
+	c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/index.html")
+}
+
+func deleteTodo(c *gin.Context){
+	rm(c.Param("todo_id"))
+	c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/index.html")
+
 }
