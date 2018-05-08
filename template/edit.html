@@ -1,0 +1,40 @@
+{{ template "header.html" .}}
+
+<main class="container-fluid">
+    <h1>TODO hinzufügen</h1><br>
+    <form id="myForm" class="form-group" action="edit.html/update/{{.title}}" method="post" onreset="setProgress('{{.Fortschritt}}','#input_progress')" onsubmit=' return confirm("Sind Sie mit den Änderungen einverstanden?");'>
+        <div class="form-group">
+            <label for="aufgabe">Aufgabe:</label>
+            <textarea id="content" class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required>{{.Content}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="datum">Datum:</label>
+            <input type="date" class="form-control" id="datum" name="date_input" required value="{{.Datum}}">
+        </div>
+        <div class="form-group">
+            <label for="fortschritt">Fortschritt in %:</label>
+
+            <div class="row">
+                <div class="col-2-md ml-3">
+                    <input type="number" class="form-control" id="fortschritt" name="fortschritt_input" placeholder="0" min="0" max="100" value="{{.Fortschritt}}" required onkeyup="setProgress(this.value,'#input_progress'); toParse(this.id)" onchange="setProgress(this.value,'#input_progress'); toParse(this.id)">
+                </div>
+                <div class="col">
+                    <div class="progress">
+                        <div id="input_progress" class="progress-bar" role="progressbar" style="width: {{.Fortschritt}}%;" aria-valuenow="{{.Fortschritt}}" aria-valuemin="0" aria-valuemax="100">{{.Fortschritt}}%</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <input type="submit" class="btn"  name="senden">
+        <input type="reset" class="btn" name="reset">
+
+
+    </form>
+
+
+
+</main>
+{{ template "footer.html" .}}

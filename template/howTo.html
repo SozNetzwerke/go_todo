@@ -1,0 +1,71 @@
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+<main class="container-fluid">
+    <article>
+        <h1>How To</h1>
+        <br>
+        <section>
+
+
+            <h2>TODO erstellen</h2>
+            <form class="form-group">
+                <ol>
+                    <li class="mt-2">
+                        <div class="form-group">
+                            <label for="aufgabe">Aufgabe:</label>
+                            <textarea class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required> </textarea>
+                        </div>
+                        <span>TODO Aufgabe beschreiben. Es sind maximal 160 Zeichen möglich.</span>
+                    </li>
+                    <li class="mt-5">
+                        <div class="form-group">
+                            <label for="datum">Datum:</label>
+                            <input type="date" class="form-control" id="datum" name="date_input" required>
+                        </div>
+                        <span>Datum im Format tt/mm/jjjj (01.05.2018 -> für den 1.Mai 2018) eingeben, oder Auswahl mithilfe des Kalenders, durch Anklicken des letzten Pfeiles auf der rechten Seite des Eingabefeldes. </span>
+                    </li>
+                    <li class="mt-5">
+                        <div class="form-group">
+                            <label for="fortschritt">Fortschritt in %:</label>
+
+                            <div class="row">
+                                <div class="col-2-md ml-3">
+                                    <input type="number" class="form-control" id="fortschritt" name="fortschritt_input" value="0" min="0" max="100" required onkeyup="setProgress(this.value,'#input_progress')" onchange="setProgress(this.value,'#input_progress')">
+                                </div>
+                                <div class="col">
+                                    <div class="progress">
+                                        <div id="input_progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <input type="submit" class="btn"  name="senden">
+                        <input type="reset" class="btn" name="reset">
+                        <br>
+                        <span>Fortschritt eingeben. Der Fortschritt hat ein Interval von 0 bis 100. Nach Eingabe aller Felder ist es Möglich mit Zurücksetzen alle Eingaben zu löschen und mit Senden das Formular abzuschicken. Falls ein Feld vergessen wurden, oder das Format der Eingabe falsch ist, dann wird man beim Klick auf dem Button Senden darauf aufmerksam gemacht.l</span>
+                    </li>
+                </ol>
+            </form>
+
+        </section>
+        <section>
+            <h2>TODO bearbeiten</h2>
+            <p>
+                <img src="../img/Bearbeiten.jpg" alt="bearbeiten" class="img-fluid"><br>
+                <span>Um ein TODO zu bearbeiten, muss man zuerst auf den Button mit dem Stift klicken. Man gelangt somit auf ein Formular, welches den gleichen Aufbau, wie das Hinzufügen von TODOS hat. Hier muss ebenfalls, wie beim TODO erstellen alle Felder ausgefüllt werden.[Siehe TODO erstellen]</span>
+            </p>
+        </section>
+        <section>
+            <h2>TODO entfernen</h2>
+            <p>
+                <img src="../img/Bearbeiten.jpg" alt="bearbeiten" class="img-fluid"><br>
+                <span>Um ein TODO zu entfernen reicht es auf den Button mit dem Kreuz zu klicken.</span>
+            </p>
+        </section>
+
+
+    </article>
+</main>
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}

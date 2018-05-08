@@ -1,21 +1,149 @@
 package main
 
-import "time"
+import (
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
+	"database/sql"
+	"log"
+	"errors"
+)
 
+/**
+Container Todo
+ */
 type todo struct {
-	ID      int       `json:"id"`
-	Title   string    `json:"title"`
-	Content string    `json:"content"`
-	DueDate string `json:"due"`
+	ID      int    `json:"id"`
+	Content string `json:"content"`
+	Datum   string `json:"datum"`
+	Fortschritt float64 `json:"fortschritt"`
 }
 
-var todoList = []todo{
-	{ID: 1, Title: "Putzen", Content: "Frühjahrsputz",
-		DueDate: time.Date(2018, 05, 20, 0, 0, 0, 0, time.UTC).Format("02-01-2006")},
-	{ID: 2, Title: "Soziale Netzwerke Hausaufgabe", Content: "Vorstellen einer todo-Webapp",
-		DueDate: time.Date(2018, 05, 14, 0, 0, 0, 0, time.UTC).Format("02-01-2006")},
-}
+/**
+return a list of Todos
+ */
+func getAllTodos() []todo {
 
-func getAllTodos() []todo  {
+	var (
+		id int
+		content string
+		datum string
+		fortschritt float64
+		todoList []todo
+	)
+
+
+	// connection to db
+	db, err := sql.Open("sqlite3", "db/SN.db")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+
+	//Query to select
+	rows, err := db.Query("select * from todo")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	var t todo
+
+	//append to list
+	for rows.Next() {
+		err := rows.Scan(&id, &content,&datum,&fortschritt)
+		if err != nil {
+			log.Fatal(err)
+		}
+		t=todo{ID:id, Content:content, Datum:datum, Fortschritt:fortschritt}
+		todoList = append(todoList, t)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
 	return todoList
+}
+
+/**
+param id int
+return a tupel (todo error)
+ */
+func getTodoById(id int) (*todo, error) {
+	todoList:=getAllTodos()
+	for _, a := range todoList {
+		if a.ID == id {
+			return &a, nil
+		}
+	}
+	return nil, errors.New("TODO not found")
+}
+
+/**
+update db by changing values of todos
+ */
+func update(id string, content string, datum string, fortschritt string,){
+	//connection
+	db, err := sql.Open("sqlite3", "db/SN.db")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+
+	//important " " for inputs
+	sqlStatement := `
+		UPDATE todo
+		SET content ="`+content +`", datum = "`+datum+`", fortschritt = "`+fortschritt+`"
+		WHERE id = "`+id+`";`
+
+
+	_, err = db.Exec(sqlStatement)
+	if err != nil {
+		log.Println("failed")
+		panic(err)
+	}else{log.Println("success")}
+
+}
+
+func rm(id string){
+	//connection
+	db, err := sql.Open("sqlite3", "db/SN.db")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+	sqlStatement := `
+		DELETE FROM todo
+		WHERE id="`+id+`";`
+
+
+	_, err = db.Exec(sqlStatement)
+	if err != nil {
+		log.Println("failed")
+		panic(err)
+	}else{log.Println("success")}
+
+}
+
+func create(cont string, dat string, fort string){
+	//connection
+	db, err := sql.Open("sqlite3", "db/SN.db")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+	sqlStatement := `
+		INSERT INTO todo ("content", "datum", "fortschritt")
+		VALUES ("`+cont+`", "`+dat+`", "`+fort+`") ;`
+
+
+	_, err = db.Exec(sqlStatement)
+	if err != nil {
+		log.Println("failed")
+		panic(err)
+	}else{log.Println("success")}
 }

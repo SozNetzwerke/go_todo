@@ -1,0 +1,39 @@
+{{ template "header.html" .}}
+<main class="container-fluid">
+    <h1>TODO hinzufügen</h1><br>
+    <form class="form-group" method=post action="createTODO.html/create" onreset="setProgress('0','#input_progress')" onsubmit="return confirm('Überprüfen Sie, ob alle Felder korrekt ausgefüllt sind. Sind sie damit einverstanden?')">
+        <div class="form-group">
+            <label for="aufgabe">Aufgabe:</label>
+            <textarea class="form-control" rows="5" id="aufgabe" name="aufgabe_input" maxlength="160" required> </textarea>
+        </div>
+        <div class="form-group">
+            <label for="datum">Datum:</label>
+            <input type="date" class="form-control" id="datum" name="date_input" required>
+        </div>
+        <div class="form-group">
+            <label for="fortschritt">Fortschritt in %:</label>
+
+            <div class="row">
+                <div class="col-2-md ml-3">
+                    <input type="number" class="form-control" id="fortschritt" name="fortschritt_input" placeholder="0" min="0" max="100" required onkeyup="setProgress(this.value,'#input_progress')" onchange="setProgress(this.value,'#input_progress')">
+                </div>
+                <div class="col">
+                    <div class="progress">
+                        <div id="input_progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <input type="submit" class="btn"  name="senden">
+        <input type="reset" class="btn" name="reset">
+
+
+    </form>
+
+
+
+</main>
+{{ template "footer.html" .}}
