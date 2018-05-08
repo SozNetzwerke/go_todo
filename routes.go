@@ -39,6 +39,8 @@ func initializeRoutes(){
 			},
 		)
 	})
+
+	router.POST("/createTODO.html/create", createTodo)
 	router.GET("howTo.html", func(c *gin.Context) {
 		c.HTML(
 			http.StatusOK,

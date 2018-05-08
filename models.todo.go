@@ -127,3 +127,23 @@ func rm(id string){
 	}else{log.Println("success")}
 
 }
+
+func create(cont string, dat string, fort string){
+	//connection
+	db, err := sql.Open("sqlite3", "db/SN.db")
+	// if there is an error opening the connection, handle it
+	if err != nil {
+		log.Print(err.Error())
+	}
+	defer db.Close()
+	sqlStatement := `
+		INSERT INTO todo ("content", "datum", "fortschritt")
+		VALUES ("`+cont+`", "`+dat+`", "`+fort+`") ;`
+
+
+	_, err = db.Exec(sqlStatement)
+	if err != nil {
+		log.Println("failed")
+		panic(err)
+	}else{log.Println("success")}
+}

@@ -82,5 +82,9 @@ func updateTodo(c *gin.Context){
 func deleteTodo(c *gin.Context){
 	rm(c.Param("todo_id"))
 	c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/index.html")
+}
 
+func createTodo(c *gin.Context){
+	create(c.PostForm("aufgabe_input"), c.PostForm("date_input"), c.PostForm("fortschritt_input"))
+	c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/index.html")
 }
