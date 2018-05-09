@@ -21,11 +21,9 @@
 
 ![Image of index.html](img/index.JPG)
 
-## HOW TO RUN?
-
 ---
 
-### Build runnable app
+## Build runnable app
 1. install go for your system https://golang.org/dl/
 2. download the repository and extract the zip
 3. open a terminal and navigate **into** the **extracted** folder
