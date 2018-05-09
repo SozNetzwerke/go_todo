@@ -18,5 +18,5 @@
 4. run app via Terminal `./app` to start the Server (if this doesn't work try `open app`)
 2. go to http://localhost:8080 on your Web Browser
 
-### http://localhost:8080
+
 ![Image of index.html](img/index.JPG)
