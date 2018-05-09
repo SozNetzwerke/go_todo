@@ -3,12 +3,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"github.com/gin-gonic/contrib/static"
 )
 
 func initializeRoutes(){
 
-	router.Use(static.Serve("/img", static.LocalFile("./img", true)))
 
 	router.POST("/index.html/delete/:todo_id", deleteTodo)
 	router.GET("/", showIndexPage)
