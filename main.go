@@ -6,8 +6,6 @@ import "github.com/gin-gonic/gin"
 
 var router *gin.Engine
 
-
-
 func main() {
 
 	// Set the router as the default one provided by Gin
@@ -15,6 +13,8 @@ func main() {
 
 	// Process the templates at the start so that they don't have to be loaded
 	// from the disk again. This makes serving HTML pages very fast.
+	router.Static("/static", "./static")
+	router.StaticFile("/favicon.ico", "./static/favicon.ico")
 	router.LoadHTMLGlob("template/*")
 
 	// Initialize the routes
